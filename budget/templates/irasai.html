@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h4>Įveskite pajamas arba išlaidas:</h4>
+<form class="form-group" method="POST">
+  <div style="margin-bottom: 15px"> 
+  <h6>Pajamos:</h6>
+    <div>Suma:<br>
+      <input type="text" name="income_amount"><br>
+    </div>
+    <div>Siuntėjas:<br>
+      <input type="text" name="sender"><br>
+    </div>
+    <div>Papildoma informacija:<br>
+      <input type="text" name="extra_information"><br>
+    </div>
+  </div>
+  <div style="margin-bottom: 15px"> 
+    <h6>Išlaidos</h6>
+    <div>Suma:<br>
+      <input type="text" name="expense_amount"><br>
+    </div>
+    <div>Atsiskaitymo būdas:<br>
+      <input type="text" name="payment_option"><br>
+    </div>
+    <div>Įsigyta prekė ar paslauga:<br>
+      <input type="text" name="bought_goods_or_services"><br>
+    </div>
+  </div>
+  <div>
+    <input type="submit" name="save", value="Išsaugoti"/>
+  </div>  
+</form>
+
+<form class="form-group" method="GET">
+  <div>
+    <input type="submit" name="action", value="Balansas"/>
+    <input type="submit" name="action", value="Išrašas"/>
+  </div>  
+</form>
+
+{% if balance %}
+  <h1>Balansas:</h1>
+  {{ balance }}
+{% endif %}
+
+{% if entries %}
+  <h1>Išrašas:</h1>
+
+  {% for entry in entries.items %}
+    <p> {{ entry }}</p>
+  {% endfor %}
+
+  
+    {% for page_num in entries.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+      {% if page_num %}
+        
+        {% if entries.page == page_num %}
+          <a class="btn btn-info mb-4" href="{{ url_for('irasai', page=page_num) + '&action=Išrašas' }}">{{ page_num }}</a>
+        {% else %}
+          <a class="btn btn-outline-info mb-4" href="{{ url_for('irasai', page=page_num) + '&action=Išrašas' }}">{{ page_num }}</a>
+        {% endif %}
+        
+      {% else %}
+        ...
+      {% endif %} 
+    {% endfor %}
+  
+
+{% endif %}
+
+{% endblock %}

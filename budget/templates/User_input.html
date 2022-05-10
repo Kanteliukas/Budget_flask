@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h4>Įveskite pajamas arba išlaidas:</h4>
+<form action="/" method="POST">
+  Pajamos:<br>
+  Suma:<br>
+  <input type="text" name="income_amount"><br>
+  Siuntėjas:<br>
+  <input type="text" name="sender"><br>
+  Papildoma informacija:<br>
+  <input type="text" name="extra_information"><br>
+  Išlaidos:<br>
+  Suma:<br>
+  <input type="text" name="expense_amount"><br>
+  Atsiskaitymo būdas:<br>
+  <input type="text" name="payment_option"><br>
+  Įsigyta prekė ar paslauga:<br>
+  <input type="text" name="bought_goods_or_services"><br>
+  <input type="submit" name="submit", value="Išsaugoti"/>
+  <input type="submit" name="submit", value="Balansas"/>
+  <input type="submit" name="submit", value="Išrašas"/>
+</form>
+{% if balance %}
+<h1>Balansas:</h1>
+{{ balance }}
+{% endif %}
+{% if entries %}
+  <h1>Išrašas:</h1>
+  {% for entry in entries %}
+    <p> {{ entry }}</p>
+  {% endfor %}
+{% endif %}
+</body>
+</html>
